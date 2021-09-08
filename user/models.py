@@ -34,3 +34,25 @@ class User(AbstractUser):
     is_mentor = models.BooleanField(default=False)
 
     objects = CustomUserManager()
+
+
+class Candidate(TimeStamp, LogicalModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Candidate user"),
+                                help_text=_("This is Candidate user"))
+
+    # teams = models....
+
+    class Meta:
+        verbose_name = _("Candidate")
+        verbose_name_plural = _("Candidates")
+
+
+class Mentor(TimeStamp, LogicalModel):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Mentor user"),
+                                help_text=_("This is Mentor user"))
+
+    # teams = models.ManyToManyField()
+
+    class Meta:
+        verbose_name = _("Mentor")
+        verbose_name_plural = _("Mentors")
