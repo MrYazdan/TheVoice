@@ -48,6 +48,9 @@ class Candidate(TimeStamp, LogicalModel):
         verbose_name = _("Candidate")
         verbose_name_plural = _("Candidates")
 
+    def __str__(self):
+        return f"{self.user.get_full_name()}"
+
 
 class Mentor(TimeStamp, LogicalModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Mentor user"),
@@ -59,3 +62,6 @@ class Mentor(TimeStamp, LogicalModel):
     class Meta:
         verbose_name = _("Mentor")
         verbose_name_plural = _("Mentors")
+
+    def __str__(self):
+        return f"{self.user.get_full_name()}"

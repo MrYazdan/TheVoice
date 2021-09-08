@@ -42,7 +42,9 @@ INSTALLED_APPS = [
     # created apps
     'core',
     'user',
-    'team'
+    'team',
+    'score',
+    'voice'
 ]
 
 MIDDLEWARE = [
