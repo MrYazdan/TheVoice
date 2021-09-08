@@ -4,6 +4,7 @@ from django.core import validators
 from django.db import models
 
 from core.models import TimeStamp, LogicalModel
+from team.models import Team
 
 
 class CustomUserManager(UserManager):
@@ -40,7 +41,8 @@ class Candidate(TimeStamp, LogicalModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Candidate user"),
                                 help_text=_("This is Candidate user"))
 
-    # teams = models....
+    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name=_("Candidates team"),
+                             help_text=_("This is Candidates team"))
 
     class Meta:
         verbose_name = _("Candidate")
@@ -51,7 +53,8 @@ class Mentor(TimeStamp, LogicalModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Mentor user"),
                                 help_text=_("This is Mentor user"))
 
-    # teams = models.ManyToManyField()
+    teams = models.ManyToManyField(Team, verbose_name=_("Candidates team"),
+                                   help_text=_("This is Candidates team"), related_name="teams")
 
     class Meta:
         verbose_name = _("Mentor")
