@@ -3,6 +3,8 @@ from django.utils.translation import gettext_lazy as _
 from django.core import validators
 from django.db import models
 
+from core.models import TimeStamp, LogicalModel
+
 
 class CustomUserManager(UserManager):
 
@@ -23,6 +25,7 @@ class CustomUserManager(UserManager):
 class User(AbstractUser):
     USERNAME_FIELD = 'phone'
 
+    age = models.PositiveIntegerField(null=True, blank=True, validators=[validators.MaxValueValidator(99)])
     phone = models.CharField(max_length=11, unique=True, validators=[
         validators.RegexValidator(regex='^(\+98|0)?9\d{9}$',
                                   message=_("Phone number must be entered in the true IR (iran) format."),
@@ -31,4 +34,3 @@ class User(AbstractUser):
     is_mentor = models.BooleanField(default=False)
 
     objects = CustomUserManager()
-
