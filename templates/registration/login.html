@@ -1,18 +1,11 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-</head>
-<body>
-    <h2>Log In</h2>
-    <form method="post">
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% translate "Login" %}{% endblock %}
+{% block body %}
+    <h1 class="text-center py-8">{% translate "Login form" %}</h1>
+    <form method="post" class="pt-8 border-t-2 border-black text-center w-50 mx-auto block">
         {% csrf_token %}
         {{ form.as_p }}
-        <button type="submit">Log In</button>
+        <input type="submit" value="{% translate "Login" %}" class="block rounded-md py-2 px-3 text-center cursor-pointer">
     </form>
-</body>
-</html>
+{% endblock %}
