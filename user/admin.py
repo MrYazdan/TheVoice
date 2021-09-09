@@ -6,6 +6,7 @@ from .models import *
 class UesrAdminModel(admin.ModelAdmin):
     list_display = ['__str__', 'is_mentor', 'is_superuser', 'is_active']
     list_editable = ['is_active']
+    readonly_fields = ['password']
 
 
 @admin.register(Candidate)
