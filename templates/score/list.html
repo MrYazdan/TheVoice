@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+{% load static %}
+{% load i18n %}
+{% block extra_head %}<link rel="stylesheet" href="{% static "css/tailwind.min.css" %}">{% endblock %}
+{% block title %}{% translate "Score list" %}{% endblock %}
+{% block body %}
+    <center>
+        <h1>This is score list</h1>
+    </center>
+{% endblock %}

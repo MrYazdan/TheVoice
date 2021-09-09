@@ -13,4 +13,7 @@ urlpatterns = [
 
     # team path :
     path('team/', include("team.urls")),
+
+    # score path :
+    path('score/', include("score.urls")),
 ]
