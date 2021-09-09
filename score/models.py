@@ -3,8 +3,8 @@ from django.core import validators
 from django.db import models
 
 from core.models import TimeStamp
-from user.models import Mentor
 from voice.models import Voice
+from user.models import Mentor
 
 
 class ScoreItem(TimeStamp):
