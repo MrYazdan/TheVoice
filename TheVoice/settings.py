@@ -41,9 +41,10 @@ INSTALLED_APPS = [
 
     # created apps
     'core',
-    'user',
-    'team',
     'score',
+    'settings',
+    'team',
+    'user',
     'voice'
 ]
 
