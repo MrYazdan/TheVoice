@@ -1,0 +1,25 @@
+{% load static %}
+{% load i18n %}
+{% get_current_language as lang %}
+<!DOCTYPE html>
+<html lang="{{ lang }}">
+<head>
+    <title>{% block title %}{% endblock %}</title>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <!-- header refrense -->
+    {% include "layout/_Head.html" %}
+    <!-- extera header -->
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<!-- body content -->
+<div id="body_block" style="min-height: 10vh;">
+    {% block body %}{% endblock %}
+</div>
+<!-- extra footer -->
+{% block extra_foot %}{% endblock %}
+</body>
+</html>

@@ -1,0 +1,152 @@
+html {
+    color: #222;
+    font-size: 1em;
+    line-height: 1.4;
+    scroll-behavior: smooth;
+}
+
+html::-webkit-scrollbar , textarea::-webkit-scrollbar {
+    width: 8px;
+    background: #2f333a;
+}
+
+html::-webkit-scrollbar-thumb, textarea::-webkit-scrollbar-thumb {
+    background-image: linear-gradient(180deg, #D0368A 0%, #708AD4 99%);
+}
+
+::-moz-selection {
+    background: #f39e0c;
+    text-shadow: none;
+}
+
+::selection {
+    background: #f39e0c;
+    text-shadow: none;
+}
+
+button:focus, input:focus {
+    outline: none;
+}
+
+.ltr {
+    direction: ltr !important;
+}
+
+.rtl {
+    direction: rtl !important;
+}
+
+img {
+    width: 100%;
+}
+
+audio,
+canvas,
+iframe,
+img,
+svg,
+video {
+    vertical-align: middle;
+}
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+textarea {
+    resize: vertical;
+}
+
+.invisible {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible !important;
+}
+
+.none {
+    display: none !important;
+}
+
+.clearfix::before,
+.clearfix::after {
+    content: " ";
+    display: table;
+}
+
+.clearfix::after {
+    clear: both;
+}
+
+@media print,
+(-webkit-min-device-pixel-ratio: 1.25),
+(min-resolution: 1.25dppx),
+(min-resolution: 120dpi) {
+    /* Style adjustments for high resolution devices */
+}
+
+@media print {
+    *,
+    *::before,
+    *::after {
+        background: #fff !important;
+        color: #000 !important;
+        /* Black prints faster */
+        box-shadow: none !important;
+        text-shadow: none !important;
+    }
+
+    a,
+    a:visited {
+        text-decoration: underline;
+    }
+
+    a[href]::after {
+        content: " (" attr(href) ")";
+    }
+
+    abbr[title]::after {
+        content: " (" attr(title) ")";
+    }
+
+    a[href^="#"]::after,
+    a[href^="javascript:"]::after {
+        content: "";
+    }
+
+    pre {
+        white-space: pre-wrap !important;
+    }
+
+    pre,
+    blockquote {
+        border: 1px solid #999;
+        page-break-inside: avoid;
+    }
+
+    thead {
+        display: table-header-group;
+    }
+
+    tr,
+    img {
+        page-break-inside: avoid;
+    }
+
+    p,
+    h2,
+    h3 {
+        orphans: 3;
+        widows: 3;
+    }
+
+    h2,
+    h3 {
+        page-break-after: avoid;
+    }
+}
+
+/* Start Main Page */
