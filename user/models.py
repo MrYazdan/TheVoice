@@ -36,6 +36,13 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    class Meta:
+        verbose_name = _("User")
+        verbose_name_plural = _("Users")
+
+    def __str__(self):
+        return self.phone
+
 
 class Candidate(TimeStamp, LogicalModel):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Candidate user"),
