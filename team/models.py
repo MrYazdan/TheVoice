@@ -1,8 +1,6 @@
 from django.utils.translation import gettext_lazy as _
-from django.core import validators
-from django.db import models
-
 from core.models import TimeStamp, LogicalModel
+from django.db import models
 
 
 class Team(TimeStamp, LogicalModel):
