@@ -10,4 +10,7 @@ urlpatterns = [
 
     # user path :
     path('', include("user.urls")),
+
+    # team path :
+    path('team/', include("team.urls")),
 ]
