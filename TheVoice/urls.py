@@ -16,4 +16,7 @@ urlpatterns = [
 
     # score path :
     path('score/', include("score.urls")),
+
+    # voice path :
+    path('voice/', include("voice.urls")),
 ]
