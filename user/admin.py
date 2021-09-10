@@ -43,7 +43,7 @@ class MentorAdminModel(admin.ModelAdmin):
                        'last_login']
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'teams')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
