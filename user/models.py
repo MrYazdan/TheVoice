@@ -1,4 +1,7 @@
+from django.contrib.auth.base_user import AbstractBaseUser
+from django.contrib.auth.hashers import make_password
 from django.contrib.auth.models import UserManager, AbstractUser
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 from django.core import validators
 from django.db import models
@@ -13,11 +16,6 @@ class CustomUserManager(UserManager):
         username = extra_fields['phone']
         return super().create_superuser(username, email, password, **extra_fields)
 
-    def create_mentor(self, username=None, email=None, password=None, **extra_fields):
-        username = extra_fields['phone']
-        extra_fields['is_mentor'] = True
-        return super().create_user(username, email, password, **extra_fields)
-
     def create_user(self, username=None, email=None, password=None, **extra_fields):
         username = extra_fields['phone']
         return super().create_user(username, email, password, **extra_fields)
@@ -26,29 +24,21 @@ class CustomUserManager(UserManager):
 class User(AbstractUser):
     USERNAME_FIELD = 'phone'
 
-    age = models.PositiveIntegerField(null=True, blank=True, validators=[validators.MaxValueValidator(99)])
     phone = models.CharField(max_length=11, unique=True, validators=[
         validators.RegexValidator(regex='^(\+98|0)?9\d{9}$',
                                   message=_("Phone number must be entered in the true IR (iran) format."),
                                   code=_('invalid IR phone number'))
     ])
-    is_mentor = models.BooleanField(default=False)
-
-    objects = CustomUserManager()
 
     class Meta:
         verbose_name = _("User")
         verbose_name_plural = _("Users")
 
-    def __str__(self):
-        return self.phone
+    objects = CustomUserManager()
 
 
-class Candidate(TimeStamp, LogicalModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Candidate user"),
-                                help_text=_("This is Candidate user"))
-
-    team = models.ForeignKey(Team, on_delete=models.CASCADE, verbose_name=_("Candidates team"),
+class Candidate(User):
+    team = models.ForeignKey(Team, on_delete=models.SET_NULL, verbose_name=_("Candidates team"), null=True, blank=True,
                              help_text=_("This is Candidates team"))
 
     class Meta:
@@ -56,14 +46,11 @@ class Candidate(TimeStamp, LogicalModel):
         verbose_name_plural = _("Candidates")
 
     def __str__(self):
-        return f"{self.user.get_full_name()}"
+        return f"{self.phone} {self.get_full_name()}"
 
 
-class Mentor(TimeStamp, LogicalModel):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name=_("Mentor user"),
-                                help_text=_("This is Mentor user"))
-
-    teams = models.ManyToManyField(Team, verbose_name=_("Candidates team"),
+class Mentor(User):
+    teams = models.ManyToManyField(Team, verbose_name=_("Candidates team"), null=True, blank=True,
                                    help_text=_("This is Candidates team"), related_name="teams")
 
     class Meta:
@@ -71,4 +58,4 @@ class Mentor(TimeStamp, LogicalModel):
         verbose_name_plural = _("Mentors")
 
     def __str__(self):
-        return f"{self.user.get_full_name()}"
+        return f"{self.phone} {self.get_full_name()}"

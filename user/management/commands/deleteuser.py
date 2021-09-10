@@ -3,18 +3,18 @@ from ...models import User
 
 
 class Command(BaseCommand):
-    help = "Delete users by id"
+    help = "Delete users by phone numbers"
 
     def add_arguments(self, parser):
-        parser.add_argument('user_id', nargs='+', type=int, help='User ID')
+        parser.add_argument('phone_numbers', nargs='+', type=str, help='User Phone Numbers')
 
     def handle(self, *args, **kwargs):
-        users_ids = kwargs['user_id']
+        users_phones = kwargs['phone_numbers']
 
-        for user_id in users_ids:
+        for phone in users_phones:
             try:
-                user = User.objects.get(pk=user_id)
+                user = User.objects.get(phone=phone)
                 user.delete()
-                self.stdout.write(self.style.SUCCESS(f'User {user.username} deleted with success!'))
+                self.stdout.write(self.style.SUCCESS(f'User {user.phone} deleted with success!'))
             except User.DoesNotExist:
-                self.stdout.write(self.style.WARNING(f'User with id {user_id} does not exist.'))
+                self.stdout.write(self.style.WARNING(f'User with id {phone} does not exist.'))

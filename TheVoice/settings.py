@@ -78,7 +78,7 @@ JAZZMIN_SETTINGS = {
 
     "related_modal_active": False,
 
-    "show_ui_builder": True,
+    "show_ui_builder": False,
 
     "changeform_format": "horizontal_tabs",
     "changeform_format_overrides": {"user.User": "collapsible"},

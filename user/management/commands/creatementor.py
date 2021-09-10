@@ -1,5 +1,5 @@
 from django.core.management import BaseCommand, CommandError
-from ...models import User
+from ...models import Mentor
 
 
 class Command(BaseCommand):
@@ -16,7 +16,7 @@ class Command(BaseCommand):
         user_password = options['user_password']
 
         try:
-            user = User.objects.create_mentor(phone=user_phone, password=user_password)
+            user = Mentor.objects.create_user(phone=user_phone, password=user_password)
             self.stdout.write(self.style.SUCCESS(f'Mentor : {user.phone}  created!'))
         except Exception as e:
             raise CommandError(e)
