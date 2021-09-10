@@ -33,6 +33,12 @@ class User(AbstractUser):
 
     objects = CustomUserManager()
 
+    def save(self, *args, **kwargs):
+        self.username = self.phone
+        if self.password is not None:
+            self.set_password(self.password)
+        super().save(*args, **kwargs)
+
 
 class Candidate(User):
     team = models.ForeignKey(Team, on_delete=models.SET_NULL, verbose_name=_("Candidates team"), null=True, blank=True,

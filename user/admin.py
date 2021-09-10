@@ -5,10 +5,9 @@ from .models import *
 
 
 @admin.register(User)
-class UesrAdminModel(BaseUserAdmin):
+class UesrAdminModel(admin.ModelAdmin):
     list_display = ['__str__', 'is_superuser', 'is_active']
     list_editable = ['is_active']
-    readonly_fields = ['password']
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
@@ -20,28 +19,28 @@ class UesrAdminModel(BaseUserAdmin):
 
 
 @admin.register(Candidate)
-class CandidateAdminModel(BaseUserAdmin):
+class CandidateAdminModel(admin.ModelAdmin):
     list_display = ['__str__', 'team', 'is_active']
     list_editable = ['is_active']
     readonly_fields = ['is_staff', 'is_superuser', 'date_joined', 'is_active', 'user_permissions', 'groups', 'username',
-                       'last_login', 'phone']
+                       'last_login']
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
-        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
+        (_('Personal info'), {'fields': ('first_name', 'last_name', 'email', 'team')}),
         (_('Permissions'), {
             'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions'),
         }),
-        (_('Important dates'), {'fields': ('last_login', 'date_joined')}),
+        (_('Important dates'), {'fields': ('last_login', 'date_joined')})
     )
 
 
 @admin.register(Mentor)
-class MentorAdminModel(BaseUserAdmin):
+class MentorAdminModel(admin.ModelAdmin):
     list_display = ['__str__', 'is_active']
     list_editable = ['is_active']
     list_horizontal = ['teams']
     readonly_fields = ['is_staff', 'is_superuser', 'date_joined', 'is_active', 'user_permissions', 'groups', 'username',
-                       'last_login', 'phone']
+                       'last_login']
     fieldsets = (
         (None, {'fields': ('phone', 'password')}),
         (_('Personal info'), {'fields': ('first_name', 'last_name', 'email')}),
