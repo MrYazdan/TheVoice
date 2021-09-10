@@ -9,8 +9,8 @@ from voice.models import Voice
 
 class Handler(LoginRequiredMixin, View):
 
-    def get(self):
-        # check user type:
+    def get(self, request):
+        # check user type (candidate - mentor - admin):
         user = self.request.user
         # annonymous user -> redirect to login page
         # admin user :
@@ -24,7 +24,7 @@ class Handler(LoginRequiredMixin, View):
             return render(self.request, "user/admin.html", context)
 
         # mentor user :
-        elif user.is_mentor:
+        elif user in Mentor.objects.all():
             context = {
                 "teams": [user.teams.all()],
                 "candidates": [Candidate.objects.filter(team=team) for team in user.teams.all()],

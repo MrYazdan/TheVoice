@@ -35,7 +35,7 @@ class User(AbstractUser):
 
     def save(self, *args, **kwargs):
         self.username = self.phone
-        if self.password is not None and self._password is not None:
+        if User.objects.filter(id=self.id):
             self.set_password(self.password)
         super().save(*args, **kwargs)
 
