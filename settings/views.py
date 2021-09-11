@@ -16,26 +16,28 @@ class Handler(LoginRequiredMixin, View):
         # admin user :
         if user.is_superuser:
             context = {
-                "teams": [Team.objects.all()],
-                "mentors": [Mentor.objects.all()],
-                "candidates": [Candidate.objects.all()],
+                "teams": Team.objects.all(),
+                "mentors": Mentor.objects.all(),
+                "candidates": Candidate.objects.all(),
             }
 
             return render(self.request, "user/admin.html", context)
 
         # mentor user :
-        elif user in Mentor.objects.all():
+        elif Mentor.objects.filter(user_ptr_id=user.id):
+            mentor = Mentor.objects.get(user_ptr_id=user.id)
             context = {
-                "teams": [user.teams.all()],
-                "candidates": [Candidate.objects.filter(team=team) for team in user.teams.all()],
+                "teams": mentor.teams.all(),
+                "candidates": Candidate.objects.filter(team__in=mentor.teams.all())
             }
 
             return render(self.request, "user/mentor.html", context)
 
         # condidate user :
+        condidate = Candidate.objects.get(user_ptr_id=user.id)
         context = {
-            "team": Candidate.objects.get(user=user).team,
-            "voices": Voice.objects.filter(owner=user)
+            "team": condidate.team,
+            "voices": Voice.objects.filter(owner=condidate)
         }
 
         return render(self.request, "user/candidate.html", context)
