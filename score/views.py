@@ -4,6 +4,7 @@ from django.views.generic import ListView, DetailView
 from django.utils.translation import gettext as _
 
 from score.models import ScoreItem as Score
+from user.models import Mentor
 
 
 class ScoreList(LoginRequiredMixin, ListView):
@@ -12,8 +13,8 @@ class ScoreList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         return Score.objects.all() if user.is_superuser \
-            else Score.objects.filter(mentor=user) if user.is_mentor \
-            else Score.objects.filter(voice__owner=user)
+            else Score.objects.filter(mentor__user_ptr_id=user.id) if Mentor.objects.filter(user_ptr_id=user.id) \
+            else Score.objects.filter(voice__owner_user_ptr_id=user.id)
 
 
 class ScoreDetail(LoginRequiredMixin, DetailView):
@@ -25,7 +26,7 @@ class ScoreDetail(LoginRequiredMixin, DetailView):
 
         try:
             return Score.objects.get(pk=pk) if user.is_superuser or (
-                    user.is_mentor and Score.objects.get(pk=pk, mentor=user)
-            ) or Score.objects.get(pk=pk, voice__owner=user) else None
+                    Mentor.objects.filter(user_ptr_id=user.id) and Score.objects.get(pk=pk, mentor__user_ptr_id=user.id)
+            ) or Score.objects.get(pk=pk, voice__owner_user_ptr_id=user.id) else None
         except Score.DoesNotExist:
             raise Http404(_('Score not found'))
