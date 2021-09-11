@@ -13,8 +13,8 @@ class VoiceList(LoginRequiredMixin, ListView):
     def get_queryset(self):
         user = self.request.user
         return Voice.objects.all() if user.is_superuser \
-            else Voice.objects.filter(owner__team__in=Mentor.objects.get(user=user).teams.all()) if user.is_mentor \
-            else Voice.objects.filter(owner=user)
+            else Voice.objects.filter(owner__team__in=Mentor.objects.get(user_ptr_id=user.id).teams.all()) \
+            if Mentor.objects.filter(user_ptr_id=user.id) else Voice.objects.filter(owner_user_ptr_id=user.id)
 
 
 class VoiceDetail(LoginRequiredMixin, DetailView):
@@ -26,7 +26,8 @@ class VoiceDetail(LoginRequiredMixin, DetailView):
 
         try:
             return Voice.objects.get(pk=pk) if user.is_superuser or (
-                    user.is_mentor and Voice.objects.get(pk=pk, owner__team__in=Mentor.objects.get(user=user).teams.all())
-            ) or Voice.objects.get(pk=pk, owner=user) else None
+                    Mentor.objects.filter(user_ptr_id=user.id) and
+                    Voice.objects.get(pk=pk, owner__team__in=Mentor.objects.get(user_ptr_id=user.id).teams.all())
+            ) or Voice.objects.get(pk=pk, owner_user_ptr_id=user.id) else None
         except Voice.DoesNotExist:
             raise Http404(_('Voice not found'))
