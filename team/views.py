@@ -12,8 +12,8 @@ class TeamList(LoginRequiredMixin, ListView):
 
     def get_queryset(self):
         user = self.request.user
-        return Team.objects.all() if user.is_superuser else Mentor.teams.all() \
-            if user.is_mentor else Candidate.objects.get(user=user).team
+        return Team.objects.all() if user.is_superuser else Mentor.objects.get(user_ptr_id=user.id).teams.all() \
+            if Mentor.objects.filter(user_ptr_id=user.id) else Candidate.objects.get(user_ptr_id=user.id).team
 
 
 class TeamDetail(LoginRequiredMixin, DetailView):
@@ -25,7 +25,8 @@ class TeamDetail(LoginRequiredMixin, DetailView):
 
         try:
             return Team.objects.get(pk=pk) if user.is_superuser or (
-                    user.is_mentor and Team.objects.get(pk=pk) in Mentor.objects.get(user=user).teams.all()
-            ) or Candidate.objects.get(user=user).team.id == pk else None
+                    Mentor.objects.filter(user_ptr_id=user.id) and Team.objects.get(pk=pk) in
+                    Mentor.objects.get(user_ptr_id=user.id).teams.all()
+            ) or Candidate.objects.get(user_ptr_id=user.id).team.id == pk else None
         except Team.DoesNotExist:
             raise Http404(_('Team not found'))
