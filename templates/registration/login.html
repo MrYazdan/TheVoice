@@ -1,11 +1,42 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% load static %}
 {% block title %}{% translate "Login" %}{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+{% endblock %}
 {% block body %}
-    <h1 class="text-center py-8">{% translate "Login form" %}</h1>
-    <form method="post" class="pt-8 border-t-2 border-black text-center w-50 mx-auto block">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="{% translate "Login" %}" class="block rounded-md py-2 px-3 text-center cursor-pointer">
-    </form>
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                <form method="post" class="sign-in-form">
+                    {% csrf_token %}
+                    <h2 class="title">{% trans "Sign in" %}</h2>
+                    <div class="input-field">
+                        <i class="fas fa-user"></i>
+                        <input type="text" required name="username" placeholder="{% trans "Phone" %}"/>
+                    </div>
+                    <div class="input-field">
+                        <i class="fas fa-lock"></i>
+                        <input type="password" required name="password" placeholder="{% trans "Password" %}"/>
+                    </div>
+                    <input type="submit" value="{% translate "Login"%}" class="btn solid"/>
+                </form>
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>{% trans "New here ?" %}</h3>
+                    <p>{% trans "No account ? Create one !" %}</p>
+                    <button class="btn transparent" id="sign-up-btn">
+                        Sign up
+                    </button>
+                </div>
+                <img src="" class="image imagesign-up" alt=""/>
+            </div>
+        </div>
+    </div>
 {% endblock %}
