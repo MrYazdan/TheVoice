@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% block title %}{% translate "Register" %}{% endblock %}
+{% block tailwind %}{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="{% static "css/login.css" %}">
+    <script src="https://kit.fontawesome.com/64d58efce2.js" crossorigin="anonymous"></script>
+{% endblock %}
+{% block body %}
+    <div class="container">
+        <div class="forms-container">
+            <div class="signin-signup">
+                {% if not status %}
+                    <form method="post" class="sign-in-form">
+                        {% csrf_token %}
+                        <h2 class="title">{% trans "Register" %}</h2>
+                        {% for error in form.errors.values %}
+                            {{ error }}
+                        {% endfor %}
+                        {% for msg in messages %}
+                            <p class="success-msg">{{ msg }}</p>
+                            <script>
+                                function redirect(){
+                                   window.location.href = "{% url "user:login" %}";
+                                }
+
+                                setTimeout(redirect, 3000);
+                            </script>
+                        {% endfor %}
+                        <div class="input-field">
+                            <i class="fas fa-user"></i>
+                            {{ form.phone }}
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-at"></i>
+                            {{ form.email }}
+                        </div>
+                        <div class="input-field SelectBox">
+                            <i class="fas fa-users"></i>
+                            {{ form.team }}
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            {{ form.password1 }}
+                        </div>
+                        <div class="input-field">
+                            <i class="fas fa-lock"></i>
+                            {{ form.password2 }}
+                        </div>
+                        <input type="submit" value="{% translate "Sign up" %}" class="btn solid"/>
+                    </form>
+                {% else %}
+                    <h1 class="error-msg">{{ status }}</h1>
+                {% endif %}
+            </div>
+        </div>
+
+        <div class="panels-container">
+            <div class="panel left-panel">
+                <div class="content">
+                    <h3>{% trans "Have Account ?" %}</h3>
+                    <p>{% trans "Go to login !" %}</p>
+                    <a href="{% url "user:login" %}" class="btn transparent" id="sign-up-btn">{% trans "Login" %}</a>
+                </div>
+                <img src="" class="image imagesign-up" alt=""/>
+            </div>
+        </div>
+    </div>
+{% endblock %}

@@ -11,6 +11,11 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <!-- header refrense -->
     {% include "layout/_Head.html" %}
+    <!-- UI -->
+    {% block tailwind %}
+        <link rel="stylesheet" href="{% static "css/tailwind.min.css" %}">
+        <link href="https://cdn.jsdelivr.net/npm/daisyui@1.14.0/dist/full.css" rel="stylesheet" type="text/css"/>
+    {% endblock %}
     <!-- extera header -->
     {% block extra_head %}{% endblock %}
 </head>
